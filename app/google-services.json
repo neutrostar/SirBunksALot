@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "761230629809",
+    "firebase_url": "https://sirbunksalot.firebaseio.com",
+    "project_id": "sirbunksalot",
+    "storage_bucket": "sirbunksalot.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761230629809:android:69aee957f873158c",
+        "android_client_info": {
+          "package_name": "com.example.apoorv.sirbunksalot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761230629809-ltaalc8jhfl4a9ajtdfiq9206kj3o7v0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.apoorv.sirbunksalot",
+            "certificate_hash": "8779cf63c0cbbf6699b9ac60119cf435710565e3"
+          }
+        },
+        {
+          "client_id": "761230629809-fk1d8cjgpt0b9g6ekmkt8bglcj99pka1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS0RmUbAl51beM1GEM7B1jg6mlMVH1Wuw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761230629809-fk1d8cjgpt0b9g6ekmkt8bglcj99pka1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
