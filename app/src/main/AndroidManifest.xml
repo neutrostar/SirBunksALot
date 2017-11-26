@@ -31,7 +31,9 @@
         <activity
             android:name=".ForgotPassword"
             android:noHistory="true" />
-        <activity android:name=".SignUp"></activity>
+        <activity android:name=".SignUp"
+            android:noHistory="true"
+            ></activity>
     </application>
 
 </manifest>

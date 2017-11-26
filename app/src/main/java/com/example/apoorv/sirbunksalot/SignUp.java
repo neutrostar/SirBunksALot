@@ -15,10 +15,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class SignUp extends Activity implements View.OnClickListener {
 
-    EditText mEmail_Field, mPasswordField;
+    EditText mEmail_Field, mPasswordField,mUsernameField,mConfirmPassword;
     ProgressBar progressBar;
     private FirebaseAuth mAuth;
 
@@ -31,7 +35,9 @@ public class SignUp extends Activity implements View.OnClickListener {
 
         mEmail_Field = (EditText) findViewById(R.id.signup_email);
         mPasswordField = (EditText) findViewById(R.id.signup_password);
+        mUsernameField =(EditText) findViewById(R.id.signup_username);
         progressBar = (ProgressBar) findViewById(R.id.signup_progressBar);
+        mConfirmPassword = (EditText) findViewById(R.id.signup_c_password);
         mAuth = FirebaseAuth.getInstance();
 
 
@@ -41,10 +47,22 @@ public class SignUp extends Activity implements View.OnClickListener {
     private void registerUser(){
         String email = mEmail_Field.getText().toString().trim();
         String password = mPasswordField.getText().toString().trim();
+        String username = mUsernameField.getText().toString().trim();
+        String confirmPassword = mConfirmPassword.getText().toString().trim();
 
         if(email.isEmpty()){
             Toast.makeText(getApplicationContext(),"Please enter a valid email",Toast.LENGTH_SHORT).show();
             mEmail_Field.requestFocus();
+            return ;
+        }
+        if(username.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Please enter a valid username",Toast.LENGTH_SHORT).show();
+            mUsernameField.requestFocus();
+            return ;
+        }
+        if(confirmPassword.isEmpty()){
+            Toast.makeText(getApplicationContext(),"Passwords don't match",Toast.LENGTH_SHORT).show();
+            mConfirmPassword.requestFocus();
             return ;
         }
         if(password.isEmpty()){
@@ -62,6 +80,11 @@ public class SignUp extends Activity implements View.OnClickListener {
             mPasswordField.requestFocus();
             return ;
         }
+        if(!password.equals(confirmPassword)){
+            Toast.makeText(getApplicationContext(),"Passwords don't match",Toast.LENGTH_SHORT).show();
+            mPasswordField.requestFocus();
+            return ;
+        }
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -70,7 +93,9 @@ public class SignUp extends Activity implements View.OnClickListener {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
+                    uploadUsernametoFirebase();
                     Toast.makeText(getApplicationContext(),"Sign Up Successful", Toast.LENGTH_SHORT).show();
+                    finish();
                     Intent intent = new Intent(SignUp.this, MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -86,6 +111,22 @@ public class SignUp extends Activity implements View.OnClickListener {
                 }
             }
         });
+    }
+
+    private void uploadUsernametoFirebase(){
+        String username = mUsernameField.getText().toString().trim();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user!=null){
+            UserProfileChangeRequest profile = new UserProfileChangeRequest.Builder().setDisplayName(username).build();
+            user.updateProfile(profile).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                        //Toast.makeText(SignUp.this, "", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
     }
 
 
